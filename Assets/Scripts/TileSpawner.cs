@@ -31,15 +31,25 @@ namespace SwingTheRoad
 
             for (int i = 0; i < tileStartCount; i++)
             {
-                SpawnTile(startingTile.GetComponent<Tile>(), false);
+                SpawnTile(startingTile.GetComponent<Tile>());
             }
+
+            SpawnTile(SelectRandomGameObjectFromList(turnTiles).GetComponent<Tile>());
         }
 
-        private void SpawnTile(Tile tile, bool spawnObstacle)
+        private void SpawnTile(Tile tile, bool spawnObstacle = false)
         {
-            prevTile = GameObject.Instantiate(tile.gameObject, currentTileLocation, Quaternion.identity);
+            Quaternion newTileRotation = tile.gameObject.transform.rotation * Quaternion.LookRotation(currentTileLocation, Vector3.up);
+
+            prevTile = GameObject.Instantiate(tile.gameObject, currentTileLocation, newTileRotation);
             currentTiles.Add(prevTile);
             currentTileLocation += Vector3.Scale(prevTile.GetComponent<Renderer>().bounds.size, currentTileDirection);
+        }
+
+        private GameObject SelectRandomGameObjectFromList(List<GameObject> list)
+        {
+            if (list.Count == 0) return null;
+            return list[Random.Range(0, list.Count)];
         }
     }
 }
