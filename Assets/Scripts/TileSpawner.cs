@@ -56,7 +56,12 @@ namespace SwingTheRoad
         public void DeletePreviousTiles()
         {
             // use object pooling
-
+            while (currentTiles.Count != 1)
+            {
+                GameObject tile = currentTiles[0];
+                currentTiles.RemoveAt(0);
+                Destroy(tile);
+            }
         }
 
         public void AddNewDirection(Vector3 direction)
