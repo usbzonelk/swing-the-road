@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerSpeedIncreaseRate = 0.1f;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float initialGravityValue = -9.81f;
+    [SerializeField] private LayerMask groundLayer;
 
     private float gravity;
     private float playerSpeed;
@@ -59,5 +60,31 @@ public class PlayerController : MonoBehaviour
     private void PlayerJump(InputAction.CallbackContext context) { }
 
     private void PlayerSlide(InputAction.CallbackContext context) { }
+
+    private void Update()
+    {
+        controller.Move(transform.forward * playerSpeed * Time.deltaTime);
+
+    }
+
+    private bool IsGrounded(float length)
+    {
+        Vector3 raycastOriginFirst = transform.position;
+        raycastOriginFirst.y -= controller.height / 2f;
+        raycastOriginFirst.y += 0.1f;
+
+        Vector3 raycastOriginSecond = raycastOriginFirst;
+        raycastOriginFirst -= transform.forward * 0.2f;
+        raycastOriginSecond += transform.forward * .2f;
+
+        if ((Physics.Raycast(raycastOriginFirst, Vector3.down, out RaycastHit hit, length, groundLayer)) ||
+                (Physics.Raycast(raycastOriginSecond, Vector3.down, out RaycastHit hit2, length, groundLayer))
+                )
+        {
+
+            return true;
+        }
+        return false;
+    }
 
 }
