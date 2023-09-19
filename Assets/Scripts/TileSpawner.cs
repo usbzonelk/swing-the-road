@@ -34,9 +34,9 @@ namespace SwingTheRoad
                 SpawnTile(startingTile.GetComponent<Tile>());
             }
 
-            // SpawnTile(SelectRandomGameObjectFromList(turnTiles).GetComponent<Tile>());
-            SpawnTile(turnTiles[0].GetComponent<Tile>());
-            AddNewDirection(Vector3.left);
+            SpawnTile(SelectRandomGameObjectFromList(turnTiles).GetComponent<Tile>());
+           // SpawnTile(turnTiles[0].GetComponent<Tile>());
+            //AddNewDirection(Vector3.left);
         }
 
         private void SpawnTile(Tile tile, bool spawnObstacle = false)
