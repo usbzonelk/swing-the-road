@@ -51,6 +51,7 @@ namespace SwingTheRoad
                 currentTileLocation += Vector3.Scale(prevTile.GetComponent<Renderer>().bounds.size, currentTileDirection);
 
             }
+            if (spawnObstacle) { SpawnObstacle(); }
         }
 
         public void DeletePreviousTiles()
@@ -61,6 +62,12 @@ namespace SwingTheRoad
                 GameObject tile = currentTiles[0];
                 currentTiles.RemoveAt(0);
                 Destroy(tile);
+            }
+            while (currentObstacles.Count != 0)
+            {
+                GameObject obstacle = currentObstacles[0];
+                currentObstacles.RemoveAt(0);
+                Destroy(obstacle);
             }
         }
 
@@ -99,5 +106,19 @@ namespace SwingTheRoad
             if (list.Count == 0) return null;
             return list[Random.Range(0, list.Count)];
         }
+
+        public void SpawnObstacle()
+        {
+
+            if (Random.value > 0.2f) return;
+
+            GameObject obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
+            Quaternion newObjectRotation = obstaclePrefab.gameObject.transform.rotation * Quaternion.LookRotation(currentTileDirection, Vector3.up);
+            GameObject obstacle = Instantiate(obstaclePrefab, currentTileLocation, newObjectRotation);
+            currentObstacles.Add(obstacle);
+
+        }
+
     }
+
 }
