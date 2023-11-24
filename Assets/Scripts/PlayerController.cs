@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace TempleRun.Player
@@ -27,6 +28,9 @@ namespace TempleRun.Player
         private InputAction jumpAction;
 
         private CharacterController controller;
+
+        [SerializeField]
+        private UnityEvent<Vector3> turnEvent;
 
         public void Awake()
         {
@@ -69,12 +73,25 @@ namespace TempleRun.Player
                 return;
             }
             Vector3 targetDirection = Quaternion.AngleAxis(90 * context.ReadValue<float>(), Vector3.up) * movementDirection;
-
+            turnEvent.Invoke(targetDirection);
+            Turn(context.ReadValue<float>(), turnPosition.Value);
         }
         private void PlayerJump(InputAction.CallbackContext context) { }
 
         private void PlayerSlide(InputAction.CallbackContext context) { }
 
+        private void Turn(float turnValue, Vector3 turnPosition)
+        {
+            Vector3 tempPlayerPos = new Vector3(turnPosition.x, transform.position.y, turnPosition.z);
+            controller.enabled = false;
+            transform.position = tempPlayerPos;
+            controller.enabled = true;
+
+            Quaternion targetRotation = transform.rotation * Quaternion.Euler(0, 90 * turnValue, 0);
+            transform.rotation = targetRotation;
+            movementDirection = transform.forward.normalized;
+
+        }
         private Vector3? CheckTurn(float turnValue)
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, .1f, turnLayer);
