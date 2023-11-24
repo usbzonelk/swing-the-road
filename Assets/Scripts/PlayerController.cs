@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private float gravity;
     private float playerSpeed;
     private Vector3 movementDirection = Vector3.forward;
+    private Vector3 playerVelocity;
 
     private PlayerInput playerInput;
     private InputAction slideAction;
@@ -64,10 +65,16 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         controller.Move(transform.forward * playerSpeed * Time.deltaTime);
+        if (IsGrounded() && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0f;
+        }
+        playerVelocity.y += gravity * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
 
     }
 
-    private bool IsGrounded(float length)
+    private bool IsGrounded(float length = .2f)
     {
         Vector3 raycastOriginFirst = transform.position;
         raycastOriginFirst.y -= controller.height / 2f;
