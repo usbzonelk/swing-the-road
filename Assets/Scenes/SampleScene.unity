@@ -512,7 +512,7 @@ MonoBehaviour:
     m_Bits: 8
   turnLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   turnEvent:
     m_PersistentCalls:
       m_Calls:
