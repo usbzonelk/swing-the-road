@@ -32,6 +32,9 @@ namespace TempleRun.Player
 
         [SerializeField]
         private UnityEvent<Vector3> turnEvent;
+        [SerializeField]
+        private UnityEvent<int> gameOverEvent;
+        private bool GameIsOn = false;
 
         public void Awake()
         {
@@ -103,6 +106,11 @@ namespace TempleRun.Player
 
         private void Update()
         {
+            if (!IsGrounded(2f) && GameIsOn)
+            {
+                GameOver(); return;
+            }
+
             controller.Move(transform.forward * playerSpeed * Time.deltaTime);
             if (IsGrounded() && playerVelocity.y < 0)
             {
@@ -110,7 +118,7 @@ namespace TempleRun.Player
             }
             playerVelocity.y += gravity * Time.deltaTime;
             controller.Move(playerVelocity * Time.deltaTime);
-
+            GameIsOn = true;
         }
 
         private bool IsGrounded(float length = .2f)
@@ -131,6 +139,13 @@ namespace TempleRun.Player
                 return true;
             }
             return false;
+        }
+
+        private void GameOver()
+        {
+            gameOverEvent.Invoke(1);
+            gameObject.SetActive(false);
+            Debug.Log("gameover");
         }
 
     }
