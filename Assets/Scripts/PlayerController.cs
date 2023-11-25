@@ -38,8 +38,6 @@ namespace TempleRun.Player
             controller = GetComponent<CharacterController>();
 
             turnAction = playerInput.actions["Turn"];
-            jumpAction = playerInput.actions["Jump"];
-            slideAction = playerInput.actions["Slide"];
 
 
         }
@@ -54,15 +52,12 @@ namespace TempleRun.Player
         private void OnEnable()
         {
             turnAction.performed += PlayerTurn;
-            jumpAction.performed += PlayerJump;
-            slideAction.performed += PlayerSlide;
+
         }
 
         private void OnDisable()
         {
             turnAction.performed -= PlayerTurn;
-            jumpAction.performed -= PlayerJump;
-            slideAction.performed -= PlayerSlide;
         }
 
         private void PlayerTurn(InputAction.CallbackContext context)
@@ -70,15 +65,13 @@ namespace TempleRun.Player
             Vector3? turnPosition = CheckTurn(context.ReadValue<float>());
             if (!turnPosition.HasValue)
             {
+                controller.Move(playerSpeed * Time.deltaTime * context.ReadValue<float>() * transform.right);
                 return;
             }
             Vector3 targetDirection = Quaternion.AngleAxis(90 * context.ReadValue<float>(), Vector3.up) * movementDirection;
             turnEvent.Invoke(targetDirection);
             Turn(context.ReadValue<float>(), turnPosition.Value);
         }
-        private void PlayerJump(InputAction.CallbackContext context) { }
-
-        private void PlayerSlide(InputAction.CallbackContext context) { }
 
         private void Turn(float turnValue, Vector3 turnPosition)
         {
