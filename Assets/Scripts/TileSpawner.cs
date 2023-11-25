@@ -95,6 +95,7 @@ namespace SwingTheRoad
 
             for (int i = 0; i < currentPathLenght; i++)
             {
+                //Obstacle spawner
                 SpawnTile(startingTile.GetComponent<Tile>(), i != 0);
             }
 
