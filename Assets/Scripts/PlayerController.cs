@@ -17,15 +17,16 @@ namespace TempleRun.Player
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private LayerMask turnLayer;
 
+        [SerializeField] private string playerColor;
+        public string[] colors = { "red", "blue", "yellow", "black" };
+
         private float gravity;
         private float playerSpeed;
         private Vector3 movementDirection = Vector3.forward;
         private Vector3 playerVelocity;
 
         private PlayerInput playerInput;
-        private InputAction slideAction;
         private InputAction turnAction;
-        private InputAction jumpAction;
 
         private CharacterController controller;
 
@@ -38,8 +39,7 @@ namespace TempleRun.Player
             controller = GetComponent<CharacterController>();
 
             turnAction = playerInput.actions["Turn"];
-
-
+            playerColor = colors[Random.Range(0, (colors.Length - 1))];
         }
 
         public void Start()
