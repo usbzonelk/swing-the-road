@@ -123,6 +123,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &343998853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 343998855}
+  - component: {fileID: 343998854}
+  m_Layer: 0
+  m_Name: PlayerColorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &343998854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343998853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb384bb2a60972a418b42c578a51a70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &343998855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343998853}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +347,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.03394123, y: -0.000000017196466, z: -5.8400573e-10, w: 0.99942386}
+  m_LocalRotation: {x: -0.03394121, y: 0.00000001719647, z: 5.8400546e-10, w: 0.99942386}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -548,6 +592,18 @@ MonoBehaviour:
   turnLayer:
     serializedVersion: 2
     m_Bits: 64
+  playRenderer: {fileID: 1281984441}
+  playerColor: 
+  colors:
+  - red
+  - blue
+  - yellow
+  - black
+  playerColorMaterials:
+  - {fileID: 2100000, guid: 15d81d78b98fe6647ab5bc498202250a, type: 2}
+  - {fileID: 2100000, guid: 775b525537e821249b06640c909b6e26, type: 2}
+  - {fileID: 2100000, guid: da6a3461e60492149aab2615297ab663, type: 2}
+  - {fileID: 2100000, guid: 9f52857bfcdfca84b928413f2e5ccbc6, type: 2}
   turnEvent:
     m_PersistentCalls:
       m_Calls:
@@ -563,6 +619,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  gameOverEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!143 &1388022234
 CharacterController:
   m_ObjectHideFlags: 0
@@ -699,7 +758,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1573573774}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.03394123, y: -0.000000017196466, z: -5.8400573e-10, w: 0.99942386}
+  m_LocalRotation: {x: -0.03394121, y: 0.00000001719647, z: 5.8400546e-10, w: 0.99942386}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 2.64, z: 1}
   m_ConstrainProportionsScale: 0
@@ -811,3 +870,4 @@ SceneRoots:
   - {fileID: 1043203879}
   - {fileID: 1388022236}
   - {fileID: 1573573776}
+  - {fileID: 343998855}

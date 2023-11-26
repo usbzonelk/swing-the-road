@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using PlayerColorManager;
+using System.Collections.Generic;
 
 namespace TempleRun.Player
 {
@@ -16,9 +18,11 @@ namespace TempleRun.Player
         [SerializeField] private float initialGravityValue = -9.81f;
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private LayerMask turnLayer;
+        [SerializeField] private Renderer playRenderer;
 
-        [SerializeField] private string playerColor;
+        public string playerColor;
         public string[] colors = { "red", "blue", "yellow", "black" };
+        public List<Material> playerColorMaterials = new List<Material>();
 
         private float gravity;
         private float playerSpeed;
@@ -42,7 +46,10 @@ namespace TempleRun.Player
             controller = GetComponent<CharacterController>();
 
             turnAction = playerInput.actions["Turn"];
-            playerColor = colors[Random.Range(0, (colors.Length - 1))];
+
+            int colorIndex = Random.Range(0, (colors.Length - 1));
+            playerColor = colors[colorIndex];
+            PlayerColorManager.PlayerColorManager.setPlayerColor(colorIndex, playRenderer, playerColorMaterials);
         }
 
         public void Start()
