@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PlayerColorManager
 {
-
+    
     public class PlayerColorManager : MonoBehaviour
 
     {

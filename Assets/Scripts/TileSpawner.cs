@@ -15,7 +15,9 @@ namespace SwingTheRoad
         [SerializeField] private GameObject startingTile;
         [SerializeField] private List<GameObject> turnTiles;
         [SerializeField] private List<GameObject> obstacles;
+
         [SerializeField] private GameObject light;
+        [SerializeField] private GameObject player;
 
         private Vector3 currentTileLocation = Vector3.zero;
         private Vector3 currentTileDirection = Vector3.forward;
@@ -62,7 +64,7 @@ namespace SwingTheRoad
                 currentTileLocation += Vector3.Scale(prevTile.GetComponent<Renderer>().bounds.size, currentTileDirection);
 
             }
-            if (spawnObstacle) { SpawnObstacle(light.GetComponent<LightColor>()); }
+            if (spawnObstacle) { SpawnObstacle(light.GetComponent<LightColor>(), player); }
         }
 
         public void DeletePreviousTiles()
@@ -119,10 +121,12 @@ namespace SwingTheRoad
             return list[Random.Range(0, list.Count)];
         }
 
-        public void SpawnObstacle(LightColor light)
+        public void SpawnObstacle(LightColor light, GameObject player)
         {
 
             if (Random.value > 0.2f) return;
+
+            light.player = player;
 
             GameObject obstaclePrefab = light.gameObject;
             GameObject pointLight = obstaclePrefab.transform.GetChild(0).gameObject;

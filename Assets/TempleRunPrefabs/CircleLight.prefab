@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9c88f0f762d5d49af95d3ee5980809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: 
+  color: red
+  player: {fileID: 0}
+  triggerDistance: 5
 --- !u!1 &7677872965436326404
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +91,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0, g: 0.990566, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 100000
   m_Range: 5
   m_SpotAngle: 16
