@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TempleRun;
 using Unity.VisualScripting;
+using System.Linq;
 
 namespace SwingTheRoad
 {
@@ -14,6 +15,7 @@ namespace SwingTheRoad
         [SerializeField] private GameObject startingTile;
         [SerializeField] private List<GameObject> turnTiles;
         [SerializeField] private List<GameObject> obstacles;
+        [SerializeField] private GameObject light;
 
         private Vector3 currentTileLocation = Vector3.zero;
         private Vector3 currentTileDirection = Vector3.forward;
@@ -21,6 +23,15 @@ namespace SwingTheRoad
 
         private List<GameObject> currentTiles;
         private List<GameObject> currentObstacles;
+
+        public Dictionary<string, Color> colorDictionary = new Dictionary<string, Color>()
+        {
+            { "red", Color.red },
+            { "blue", Color.blue },
+            { "yellow", Color.yellow },
+            { "black", Color.black }
+        };
+
 
         private void Start()
         {
@@ -31,11 +42,11 @@ namespace SwingTheRoad
 
             for (int i = 0; i < tileStartCount; i++)
             {
-                SpawnTile(startingTile.GetComponent<Tile>());
+                SpawnTile(startingTile.GetComponent<Tile>(), true);
             }
 
             SpawnTile(SelectRandomGameObjectFromList(turnTiles).GetComponent<Tile>());
-           // SpawnTile(turnTiles[0].GetComponent<Tile>());
+            // SpawnTile(turnTiles[0].GetComponent<Tile>());
             //AddNewDirection(Vector3.left);
         }
 
@@ -51,7 +62,7 @@ namespace SwingTheRoad
                 currentTileLocation += Vector3.Scale(prevTile.GetComponent<Renderer>().bounds.size, currentTileDirection);
 
             }
-            if (spawnObstacle) { SpawnObstacle(); }
+            if (spawnObstacle) { SpawnObstacle(light.GetComponent<LightColor>()); }
         }
 
         public void DeletePreviousTiles()
@@ -108,12 +119,21 @@ namespace SwingTheRoad
             return list[Random.Range(0, list.Count)];
         }
 
-        public void SpawnObstacle()
+        public void SpawnObstacle(LightColor light)
         {
 
             if (Random.value > 0.2f) return;
 
-            GameObject obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
+            GameObject obstaclePrefab = light.gameObject;
+            GameObject pointLight = obstaclePrefab.transform.GetChild(0).gameObject;
+
+            int colorIndex = Random.Range(0, (colorDictionary.Count - 1));
+            var lightColor = colorDictionary.ElementAt(colorIndex).Value;
+            var lightColorName = colorDictionary.ElementAt(colorIndex).Key;
+
+            light.color = lightColorName;
+            pointLight.GetComponent<Light>().color = lightColor;
+
             Quaternion newObjectRotation = obstaclePrefab.gameObject.transform.rotation * Quaternion.LookRotation(currentTileDirection, Vector3.up);
             GameObject obstacle = Instantiate(obstaclePrefab, currentTileLocation, newObjectRotation);
             currentObstacles.Add(obstacle);
