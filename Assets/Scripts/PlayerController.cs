@@ -148,7 +148,7 @@ namespace TempleRun.Player
             return false;
         }
 
-        private void GameOver()
+        public void GameOver()
         {
             gameOverEvent.Invoke(1);
             gameObject.SetActive(false);
