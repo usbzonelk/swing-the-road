@@ -179,7 +179,6 @@ namespace SwingTheRoad
             int rows = (int)Random.Range(1, 5);
             for (int i = 0; i < rows; i++)
             {
-                Debug.Log(i);
                 string[] rowColors = { "", "", "" };
                 for (int j = 0; j < 3; j++)
                 {
