@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 775b525537e821249b06640c909b6e26, type: 2}
+  - {fileID: 2100000, guid: 15d81d78b98fe6647ab5bc498202250a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -210,6 +210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee0fecedccaec441b0e7460d54df0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: blue
+  color: red
   player: {fileID: 0}
   triggerDistance: 2
