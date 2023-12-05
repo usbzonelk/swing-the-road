@@ -67,7 +67,7 @@ namespace SwingTheRoad
                 currentTileLocation += Vector3.Scale(prevTile.GetComponent<Renderer>().bounds.size, currentTileDirection);
 
             }
-            if (spawnObstacle) { SpawnCollider(collider.GetComponent<ColliderManager>(), player); }
+            if (spawnObstacle) { BatchSpawn(collider.GetComponent<ColliderManager>(), player); }
         }
 
         public void DeletePreviousTiles()
@@ -147,10 +147,10 @@ namespace SwingTheRoad
 
         }
 
-        public void SpawnCollider(ColliderManager collider, GameObject player)
+        public void SpawnCollider(ColliderManager collider, GameObject player, int colorIndex, Vector3 newColliderLocation)
         {
 
-            if (Random.value > 0.2f) return;
+            if (Random.value > 0.9f) return;
 
             collider.player = player;
             var playerColorMaterials = collider.player.GetComponent<PlayerController>().playerColorMaterials;
@@ -158,7 +158,7 @@ namespace SwingTheRoad
             GameObject colliderPrefab = collider.gameObject;
             var colliderRenderer = colliderPrefab.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
 
-            int colorIndex = Random.Range(0, (colorDictionary.Count - 1));
+            //int colorIndex = Random.Range(0, (colorDictionary.Count - 1));
             var colliderColor = colorDictionary.ElementAt(colorIndex).Key;
             collider.color = colliderColor;
 
@@ -167,10 +167,39 @@ namespace SwingTheRoad
 
 
             Quaternion newObjectRotation = colliderPrefab.gameObject.transform.rotation * Quaternion.LookRotation(currentTileDirection, Vector3.up);
-            Vector3 newColliderLocation = new Vector3(currentTileLocation.x, currentTileLocation.y + 1.3f, currentTileLocation.z);
+            //Vector3 newColliderLocation = new Vector3(currentTileLocation.x, currentTileLocation.y + 1.3f, currentTileLocation.z);
             GameObject obstacle = Instantiate(colliderPrefab, newColliderLocation, newObjectRotation);
 
             currentObstacles.Add(obstacle);
+
+        }
+
+        public void BatchSpawn(ColliderManager collider, GameObject player)
+        {
+            int rows = (int)Random.Range(1, 5);
+            for (int i = 0; i < rows; i++)
+            {
+                Debug.Log(i);
+                string[] rowColors = { "", "", "" };
+                for (int j = 0; j < 3; j++)
+                {
+                    float posX = 5f; float posZ = 5f; float posY = 1.3f;
+                    var playerColor = player.gameObject.GetComponent<PlayerController>().playerColor;
+
+                    int colorIndex = Random.Range(0, (colorDictionary.Count - 1));
+                    var colliderColor = colorDictionary.ElementAt(colorIndex).Key;
+                    if (j == 2)
+                    {
+                        if (!rowColors.Contains(playerColor))
+                        {
+                            colliderColor = playerColor;
+                        }
+                    }
+                    Vector3 colliderLocation = new Vector3(currentTileLocation.x + (float)(j - 1) * posX, currentTileLocation.y + posY, currentTileLocation.z + posZ);
+                    rowColors[j] = colliderColor;
+                    SpawnCollider(collider.GetComponent<ColliderManager>(), player, colorIndex, colliderLocation);
+                }
+            }
 
         }
 
