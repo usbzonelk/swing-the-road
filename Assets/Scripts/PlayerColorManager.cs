@@ -9,10 +9,10 @@ namespace PlayerColorManager
     {
         public static void setPlayerColor(int colorIndex, Renderer renderer, List<Material> materialsList)
         {
+            Debug.Log(colorIndex);
             var newMaterial = materialsList[colorIndex];
             renderer.material = newMaterial;
             if (newMaterial == null) { Debug.Log("fuckery "+colorIndex); }
-
         }
     }
 }
