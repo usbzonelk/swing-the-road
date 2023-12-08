@@ -20,6 +20,15 @@ namespace TempleRun.Player
         [SerializeField] private LayerMask turnLayer;
         [SerializeField] private Renderer playRenderer;
 
+        [SerializeField]
+        private UnityEvent<Vector3> turnEvent;
+        [SerializeField]
+        private UnityEvent<int> gameOverEvent;
+        [SerializeField]
+        private UnityEvent<int> scoreUpdateEvent;
+        [SerializeField]
+        private float scoreMultiplier = 10f;
+
         public string playerColor;
         public string[] colors = { "red", "blue", "yellow", "black" };
         public List<Material> playerColorMaterials = new List<Material>();
@@ -34,11 +43,8 @@ namespace TempleRun.Player
 
         private CharacterController controller;
 
-        [SerializeField]
-        private UnityEvent<Vector3> turnEvent;
-        [SerializeField]
-        private UnityEvent<int> gameOverEvent;
         private bool GameIsOn = false;
+        private float score = 0;
 
         public void Awake()
         {
@@ -113,6 +119,9 @@ namespace TempleRun.Player
 
         private void Update()
         {
+            score += scoreMultiplier * Time.deltaTime;
+            scoreUpdateEvent.Invoke((int)score);
+
             if (!IsGrounded(2f) && GameIsOn)
             {
                 GameOver(); return;
@@ -150,7 +159,7 @@ namespace TempleRun.Player
 
         public void GameOver()
         {
-            gameOverEvent.Invoke(1);
+            gameOverEvent.Invoke((int)score);
             gameObject.SetActive(false);
             Debug.Log("gameover");
         }
