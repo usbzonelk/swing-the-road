@@ -1595,7 +1595,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  scoreMultiplier: 0
+  scoreMultiplier: 1
   playerColor: 
   colors:
   - red
