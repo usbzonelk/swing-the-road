@@ -117,9 +117,42 @@ namespace TempleRun.Player
 
         }
 
+        private float GetPlayerIncreaseRate(int score)
+
+        {
+            float playerSpeedIncreaseRate = 0f;
+            if (score < 40)
+            {
+                playerSpeedIncreaseRate = 0.15f;
+            }
+            else if (score < 120)
+            {
+                playerSpeedIncreaseRate = 0.25f;
+
+            }
+            else if (score < 180)
+            {
+                playerSpeedIncreaseRate = 0.35f;
+
+            }
+            else
+            {
+                playerSpeedIncreaseRate = 0.5f;
+            }
+            return playerSpeedIncreaseRate;
+        }
+
         private void Update()
         {
             score += scoreMultiplier * Time.deltaTime;
+
+            playerSpeedIncreaseRate = GetPlayerIncreaseRate((int)score);
+
+            if (playerSpeed < maximumPlayerSpeed)
+            {
+                playerSpeed += playerSpeedIncreaseRate;
+            }
+
             scoreUpdateEvent.Invoke((int)score);
 
             if (!IsGrounded(2f) && GameIsOn)
